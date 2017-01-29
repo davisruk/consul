@@ -1,0 +1,23 @@
+# For config params below the app will look under
+# the following consul key:
+# /config/${spring.application.name}/
+# spring.application.name is set in application properties
+# For discovery if you are using Consul in a docker container
+# and your app is running outside the container
+# you need to provide the hostname (for the app not for consul).
+# This is because spring will use localhost as the service
+# address of your app if you have no domain. Consul uses
+# the hostname to call a /health service on the app to check its
+# state; localhost obviously refers to its own container in this
+# context so the check will fail and Consul could decide
+# to deregister your service!! 
+spring:
+  cloud:
+    consul:
+      config:
+        enabled: true
+        prefix: config
+        defaultContext: apps
+        profileSeparator: '::'
+      discovery:
+        hostname: OFFICE-PC
